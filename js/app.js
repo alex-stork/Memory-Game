@@ -1,7 +1,13 @@
 /*
  * Create a list that holds all of your cards
  */
-const cardList = ["fa-diamond", "fa-diamond", "fa-paper-plane", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle"];
+let defaultCardList = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle"];
+
+let cardList = shuffle(defaultCardList);
+
+let tilesFlipped = 0;
+let firstCard = 0;
+let secondCard = 0;
 
 /*
  * Display the cards on the page
@@ -38,22 +44,36 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-let tilesFlipped = 0;
-
 const oneCard = document.querySelectorAll(".card"); //represents a single card
 
-shuffle(cardList); //randomizes card list array
-
-for (let i = 0; i < oneCard.length; i++) {
-	oneCard[i].classList.add("fa", cardList[i]); //applies randomized list to current deck
+function reRoll () {
+	for (let i = 0; i < oneCard.length; i++) {
+		oneCard[i].classList.add("fa", cardList[i]); //applies randomized list to current deck
+	}
 }
 
 for(let i = 0; i < oneCard.length; i++) {
-	oneCard[i].addEventListener("click", myClick(i));
+	oneCard[i].addEventListener("click", function() {
+		oneCard[i];
+		oneCard[i].classList.add("show", "open");
+		console.log(firstCard);
+		tilesFlipped += 1;
+		console.log("tile flipped = " + tilesFlipped);
+	});
 }
 
-function myClick(index) {
-	return function() {
-		console.log("you clicked region number " + index);
-	};
+function newBoard() { //resets the board and reshuffles the deck
+	tilesFlipped = 0;
+	for(let i = 0; i < oneCard.length; i++) {
+		// oneCard[i].classList.remove("show");
+		oneCard[i].classList.remove("fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle", "open");
+		reRoll();
+	}
+	cardList = shuffle(defaultCardList);
 }
+
+reRoll();
+
+newGame = document.querySelector("#restart");
+
+newGame.addEventListener("click", this.newBoard, false);
