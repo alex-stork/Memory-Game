@@ -11,7 +11,7 @@ let tilesMatched = 0;
 
 //When the player is ready to play a new game, they press on the reset button and the code below will activate
 let newGame = document.querySelector("#restart");
-newGame.addEventListener("click", this.newBoard);
+newGame.addEventListener("click", newBoard);
 
 /*
  * Display the cards on the page
@@ -60,10 +60,11 @@ function reShuffle() { //reshuffles the deck for next game
 function newBoard() { //resets the board and reshuffles the deck
 	console.log("Resetting game!");
 	tilesMatched = 0;
+	console.log("Tiles matched is now: " + tilesMatched);
 	cardList = shuffle(cardList);
-	for(let i = 0; i < oneCard.length; i++) {
-		oneCard[i].classList.remove("fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle", "open", "match");
-	}
+	oneCard.forEach(function(element, index) {
+		oneCard[index].classList.remove("fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle", "open", "match");
+	})
 	reShuffle();
 	main();
 }
@@ -73,20 +74,20 @@ function main() { //main code
 	let secondCard = "";
 	let tilesFlipped = 0;
 	
-	for (let i = 0; i < oneCard.length; i++) {
-		console.log(i);
-		oneCard[i].addEventListener("click", function () {
+	oneCard.forEach(function(button, index) {
+		console.log(index);
+		oneCard[index].addEventListener("click", function () {
 			tilesFlipped++;
-			oneCard[i].classList.add("show", "open");
+			oneCard[index].classList.add("show", "open");
 			if (tilesFlipped == 1) {
-				firstCard = oneCard[i];
+				firstCard = oneCard[index];
 			}
 			if (tilesFlipped == 2) {
-				secondCard = oneCard[i];
+				secondCard = oneCard[index];
 				compare(firstCard, secondCard);
 			}
 		});
-	}
+	})
 }
 
 function compare(one, two) {
