@@ -7,6 +7,7 @@ let cardList = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-
 //Global variables
 const oneCard = document.querySelectorAll(".card"); //represents a single card
 let totalMoves = 0;
+let tilesMatched = 0;
 
 //When the player is ready to play a new game, they press on the reset button and the code below will activate
 let newGame = document.querySelector("#restart");
@@ -57,6 +58,8 @@ function reShuffle() { //reshuffles the deck for next game
 }
 
 function newBoard() { //resets the board and reshuffles the deck
+	console.log("Resetting game!");
+	tilesMatched = 0;
 	cardList = shuffle(cardList);
 	for(let i = 0; i < oneCard.length; i++) {
 		oneCard[i].classList.remove("fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle", "open", "match");
@@ -69,8 +72,9 @@ function main() { //main code
 	let firstCard = "";
 	let secondCard = "";
 	let tilesFlipped = 0;
-
+	
 	for (let i = 0; i < oneCard.length; i++) {
+		console.log(i);
 		oneCard[i].addEventListener("click", function () {
 			tilesFlipped++;
 			oneCard[i].classList.add("show", "open");
@@ -95,6 +99,8 @@ function compare(one, two) {
 		one.classList.add("match");
 		two.classList.add("match");
 		console.log("It's a match!");
+		tilesMatched += 2;
+		console.log("Tiles matched: " + tilesMatched);
 		main();
 	} 
 
