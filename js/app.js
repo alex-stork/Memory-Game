@@ -65,6 +65,7 @@ function newBoard() {
     secondCard = "";
     totalMoves = 0;
     tilesMatched = 0;
+    livesRemaining = 5;
     shuffle(cardList);
 
     oneCard.forEach(function (element, index) {
@@ -72,6 +73,7 @@ function newBoard() {
     })
 
     document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>";
+    starList = document.getElementsByClassName("fa-star");
 
     document.getElementById("card0").removeAttribute("class");
     document.getElementById("card1").removeAttribute("class");
