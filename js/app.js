@@ -17,23 +17,22 @@ let starList = document.getElementsByClassName("fa-star");
 //Restarts the game!
 
 newGame.addEventListener("click", newBoard);
-oneCard[0].addEventListener("click", function() {flipCard(0)});
-oneCard[1].addEventListener("click", function() {flipCard(1)});
-oneCard[2].addEventListener("click", function() {flipCard(2)});
-oneCard[3].addEventListener("click", function() {flipCard(3)});
-oneCard[4].addEventListener("click", function() {flipCard(4)});
-oneCard[5].addEventListener("click", function() {flipCard(5)});
-oneCard[6].addEventListener("click", function() {flipCard(6)});
-oneCard[7].addEventListener("click", function() {flipCard(7)});
-oneCard[8].addEventListener("click", function() {flipCard(8)});
-oneCard[9].addEventListener("click", function() {flipCard(9)});
-oneCard[10].addEventListener("click", function() {flipCard(10)});
-oneCard[11].addEventListener("click", function() {flipCard(11)});
-oneCard[12].addEventListener("click", function() {flipCard(12)});
-oneCard[13].addEventListener("click", function() {flipCard(13)});
-oneCard[14].addEventListener("click", function() {flipCard(14)});
-oneCard[15].addEventListener("click", function() {flipCard(15)});
-
+oneCard[0].onclick = function() {flipCard(0)};
+oneCard[1].onclick = function() {flipCard(1)};
+oneCard[2].onclick = function() {flipCard(2)};
+oneCard[3].onclick = function() {flipCard(3)};
+oneCard[4].onclick = function() {flipCard(4)};
+oneCard[5].onclick = function() {flipCard(5)};
+oneCard[6].onclick = function() {flipCard(6)};
+oneCard[7].onclick = function() {flipCard(7)};
+oneCard[8].onclick = function() {flipCard(8)};
+oneCard[9].onclick = function() {flipCard(9)};
+oneCard[10].onclick = function() {flipCard(10)};
+oneCard[11].onclick = function() {flipCard(11)};
+oneCard[12].onclick = function() {flipCard(12)};
+oneCard[13].onclick = function() {flipCard(13)};
+oneCard[14].onclick = function() {flipCard(14)};
+oneCard[15].onclick = function() {flipCard(15)};
 
 /*
  * Display the cards on the page
@@ -69,7 +68,8 @@ function newBoard() {
     shuffle(cardList);
 
     oneCard.forEach(function (element, index) {
-        oneCard[index].classList.remove("open", "match", "notmatch"); //Need to add "show" to this list when code is complete!
+        oneCard[index].classList.remove("open", "match", "notmatch", "show"); 
+        oneCard[index].style.pointerEvents = "";
     })
 
     document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>";
@@ -139,7 +139,8 @@ function flipCard(number) {
             //Keep both cards green, flipped over
             firstCardElement.classList.add("match");
             secondCardElement.classList.add("match");
-
+            firstCardElement.style.pointerEvents = "none";
+            secondCardElement.style.pointerEvents = "none";
             tilesMatched += 2;
         } else {
             console.log("NOT MATCH"); //Need to actually create an animation here
@@ -150,11 +151,11 @@ function flipCard(number) {
             secondCardElement.classList.add("notmatch");
 
             setTimeout(function () {
-                firstCardElement.classList.remove("notmatch", "open");
-                secondCardElement.classList.remove("notmatch", "open");
+                firstCardElement.classList.remove("notmatch", "open", "show");
+                secondCardElement.classList.remove("notmatch", "open", "show");
                 starList[livesRemaining - 1].classList.remove("fa", "fa-star");
                 livesRemaining -= 1;
-            }, 500)
+            }, 750)
         }
 
         firstCard = "";
