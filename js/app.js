@@ -155,7 +155,7 @@ function flipCard(number) {
                 secondCardElement.classList.remove("notmatch", "open", "show");
                 starList[livesRemaining - 1].classList.remove("fa", "fa-star");
                 livesRemaining -= 1;
-            }, 750)
+            }, 500)
         }
 
         firstCard = "";
@@ -171,13 +171,21 @@ function main() {
 }
 
 function winValidation() {
-    if(tilesMatched === 16) {
-        setTimeout(function () {
-            alert("YOU WIN!!! YOU WON IN " + totalMoves + " moves!");
-        }, 500)
-    }
-         else {
-        console.log("You have matched " + tilesMatched + " tiles");
+    if(livesRemaining > 1) {
+        if(tilesMatched === 16) {
+            setTimeout(function () {
+                alert("YOU WIN!!! YOU WON IN " + totalMoves + " moves!");
+            }, 500)
+        }
+            else {
+            console.log("You have matched " + tilesMatched + " tiles");
+        }
+    } else { setTimeout(function () {
+        alert("Game Over!");
+        oneCard.forEach(function (element, index) {
+            oneCard[index].style.pointerEvents = "none";
+        })
+        }, 750)
     }
 }
 
