@@ -11,40 +11,113 @@ const oneCard = document.querySelectorAll(".card");
 let cardList = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bomb", "fa-bomb", "fa-bicycle", "fa-bicycle"];
 let totalMoves = 0; //Total moves defaulted to 0, increment by 1 for each move
 let tilesMatched = 0; //Total tiles matched defaulted to 0, increment by 2 for each matching pair
-let livesRemaining = 5; 
+let livesRemaining = 10;
 let firstCard = "";
 let secondCard = "";
 let firstCardElement;
 let secondCardElement;
 let starList = document.getElementsByClassName("fa-star");
 
-/*Sets the initial set of stars*/
-document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>"; 
+//Stopwatch code here
+let time = document.querySelector("#time");
+let timer;
+let seconds = 0;
+let minutes = 0;
 
-/*newGame holds the information for the Reset Button. When the Reset Button is clicked, the newBoard function will initiate (function below)*/
+//Define variables to hold "display" value
+let displaySeconds = 0;
+let displayMinutes = 0;
+let clockRunningValidator;
+
+//Stopwatch function that counts by seconds, then moves to minutes after 60 seconds is reached
+function stopwatch() {
+    seconds++;
+    if (seconds / 60 === 1) {
+        seconds = 0;
+        minutes++;
+    }
+    //Display updated time values to user, displaySeconds allows leading 0 to always display
+    if (seconds < 10) {
+        displaySeconds = "0" + seconds.toString();
+    } else {
+        displaySeconds = seconds;
+    }
+    if (minutes < 10) {
+        displayMinutes = "0" + minutes.toString();
+    } else {
+        displayMinutes = minutes;
+    }
+    time.innerHTML = displayMinutes + ":" + displaySeconds;
+}
+
+//Checks if clock already started, if it hasn't it will start the clock
+function runClock() {
+    if (clockRunningValidator != "running") {
+        timer = window.setInterval(stopwatch, 1000);
+        clockRunningValidator = "running";
+    }
+}
+
+//Sets the initial set of stars
+document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>";
+
+//newGame holds the information for the Reset Button. When the Reset Button is clicked, the newBoard function will initiate (function below)
 const newGame = document.querySelector("#restart");
 newGame.addEventListener("click", newBoard);
 
+//Executes same function as newGame above, but button is only accessible when the game is completed
 const playAgain = document.querySelector("#playAgain");
 playAgain.addEventListener("click", newBoard);
 
 //Created listener events for each individual card
-oneCard[0].onclick = function() {flipCard(0)};
-oneCard[1].onclick = function() {flipCard(1)};
-oneCard[2].onclick = function() {flipCard(2)};
-oneCard[3].onclick = function() {flipCard(3)};
-oneCard[4].onclick = function() {flipCard(4)};
-oneCard[5].onclick = function() {flipCard(5)};
-oneCard[6].onclick = function() {flipCard(6)};
-oneCard[7].onclick = function() {flipCard(7)};
-oneCard[8].onclick = function() {flipCard(8)};
-oneCard[9].onclick = function() {flipCard(9)};
-oneCard[10].onclick = function() {flipCard(10)};
-oneCard[11].onclick = function() {flipCard(11)};
-oneCard[12].onclick = function() {flipCard(12)};
-oneCard[13].onclick = function() {flipCard(13)};
-oneCard[14].onclick = function() {flipCard(14)};
-oneCard[15].onclick = function() {flipCard(15)};
+oneCard[0].onclick = function () {
+    flipCard(0)
+};
+oneCard[1].onclick = function () {
+    flipCard(1)
+};
+oneCard[2].onclick = function () {
+    flipCard(2)
+};
+oneCard[3].onclick = function () {
+    flipCard(3)
+};
+oneCard[4].onclick = function () {
+    flipCard(4)
+};
+oneCard[5].onclick = function () {
+    flipCard(5)
+};
+oneCard[6].onclick = function () {
+    flipCard(6)
+};
+oneCard[7].onclick = function () {
+    flipCard(7)
+};
+oneCard[8].onclick = function () {
+    flipCard(8)
+};
+oneCard[9].onclick = function () {
+    flipCard(9)
+};
+oneCard[10].onclick = function () {
+    flipCard(10)
+};
+oneCard[11].onclick = function () {
+    flipCard(11)
+};
+oneCard[12].onclick = function () {
+    flipCard(12)
+};
+oneCard[13].onclick = function () {
+    flipCard(13)
+};
+oneCard[14].onclick = function () {
+    flipCard(14)
+};
+oneCard[15].onclick = function () {
+    flipCard(15)
+};
 
 /*
  * Display the cards on the page
@@ -92,21 +165,28 @@ function setBoard() {
 
 //Restarts game, resets all counts, but only when reset button is clicked
 function newBoard() {
+    window.clearInterval(timer);
+    clockRunningValidator = "not running";
+    seconds = 0;
+    minutes = 0;
+    displaySeconds = "00";
+    displayMinutes = "00";
+    time.innerHTML = displayMinutes + ":" + displaySeconds;
     firstCard = "";
     secondCard = "";
     totalMoves = 0;
     tilesMatched = 0;
-    livesRemaining = 5;
+    livesRemaining = 10;
     shuffle(cardList);
 
     //Removes all classes for each card in order to display a reset board
     oneCard.forEach(function (element, index) {
-        oneCard[index].classList.remove("open", "match", "notmatch", "show"); 
+        oneCard[index].classList.remove("open", "match", "notmatch", "show");
         oneCard[index].style.pointerEvents = "";
     })
 
     //Resets the HTML that displays all 5 stars
-    document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>";
+    document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>";
     starList = document.getElementsByClassName("fa-star");
 
     document.getElementById("card0").removeAttribute("class");
@@ -125,21 +205,25 @@ function newBoard() {
     document.getElementById("card13").removeAttribute("class");
     document.getElementById("card14").removeAttribute("class");
     document.getElementById("card15").removeAttribute("class");
-    
+
     //If pop-up is displayed from previous game, it will disappear to allow New Game
     document.querySelector(".pop-up").style.display = "none";
 
     main();
 }
 
-/*(1) Flip card will first assign the firstCard variable to the first card that is clicked, and (2) then the secondCard variable for when the second card is clicked. (3) Only when two cards are flipped over will it compare the information between the two and see if they match. (4) If they do match, both cards will highlight green. (5) If they do not match, the player's life count will decrease by 1 and the cards will be flipped back over.*/
+/*(1) Flip card will first assign the firstCard variable to the first card that is clicked, and (2) then the secondCard variable for when the second card is clicked. 
+(3) Only when two cards are flipped over will it compare the information between the two and see if they match. (4) If they do match, both cards will highlight green. 
+(5) If they do not match, the player's life count will decrease by 1 and the cards will be flipped back over.*/
 function flipCard(number) {
+    runClock();
     document.getElementById("moves").textContent = totalMoves + " "; //Increments moves # by 1
     if (firstCard === "" && secondCard === "") { //(1)
         totalMoves += 1;
         oneCard[number].classList.add("open", "show");
         firstCard = cardList[number];
         firstCardElement = oneCard[number];
+        firstCardElement.style.pointerEvents = "none";
     } else if (firstCard !== "" && secondCard === "") { //(2)
         oneCard[number].classList.add("open", "show");
         secondCard = cardList[number];
@@ -152,12 +236,14 @@ function flipCard(number) {
             firstCardElement.style.pointerEvents = "none";
             secondCardElement.style.pointerEvents = "none";
             tilesMatched += 2;
-        } else { 
+        } else {
             //Need to actually create an animation here
             //Animation to show not matched, then flip back over
             livesRemaining -= 1; //(5)
             firstCardElement.classList.add("notmatch");
             secondCardElement.classList.add("notmatch");
+            firstCardElement.style.pointerEvents = "";
+            secondCardElement.style.pointerEvents = "";
 
             setTimeout(function () {
                 firstCardElement.classList.remove("notmatch", "open", "show");
@@ -172,26 +258,32 @@ function flipCard(number) {
     }
 }
 
-/*Checks every time two cards are flipped over to see whether or not the player has won, or if the player has run out of lives. If livesRemaining is not equal to 0, it will then check if the variable tilesMatched is 16 (all cards are matched and flipped over). If all cards are flipped over, the player wins. If the player runs out of lives, the player loses.*/
+/*Checks every time two cards are flipped over to see whether or not the player has won, or if the player has run out of lives. 
+If livesRemaining is not equal to 0, it will then check if the variable tilesMatched is 16 (all cards are matched and flipped over). 
+If all cards are flipped over, the player wins. If the player runs out of lives, the player loses.*/
 function winValidation() {
-    if(livesRemaining > 0) {
-        if(tilesMatched === 16) {
+    if (livesRemaining > 0) {
+        if (tilesMatched === 16) {
+            window.clearInterval(timer);
             setTimeout(function () {
                 document.getElementById("endGame").style.display = "block";
-                document.getElementById("verdict").innerHTML = "<h1>YOU WIN!!!</h1><h1>You matched all the tiles and made " + totalMoves + " moves. Your star rating was " + livesRemaining + "! Great job!!</h1>";
+                document.getElementById("verdict").innerHTML = "<h1>YOU WIN!!!</h1><h1>You matched all the tiles and made " + totalMoves + " moves. Your star rating was " + livesRemaining + " and you beat the game in " + minutes + " minutes and " + seconds + " seconds!! Great job!!</h1>";
             }, 500)
         }
-    } else { setTimeout(function () {
-        oneCard.forEach(function (element, index) {
-            oneCard[index].style.pointerEvents = "none";
-        })
-        document.getElementById("endGame").style.display = "block";
-        document.getElementById("verdict").innerHTML = "<h1>GAME OVER</h1><h1>You matched " + tilesMatched + " tiles and made " + totalMoves + " moves. Please try again!</h1>";
+    } else {
+        window.clearInterval(timer);
+        setTimeout(function () {
+            oneCard.forEach(function (element, index) {
+                oneCard[index].style.pointerEvents = "none";
+            })
+            document.getElementById("endGame").style.display = "block";
+            document.getElementById("verdict").innerHTML = "<h1>GAME OVER</h1><h1>You matched " + tilesMatched + " tiles and made " + totalMoves + " moves. Please try again!</h1>";
         }, 750)
     }
 }
 
-/*Initiates first game, as well as every game afterwards when a user presses the Reset Button, by removing the classes for each card, resetting the star count, reshuffling the array of cards, and reapplying a new deck.*/ 
+/*Initiates first game, as well as every game afterwards when a user presses the Reset Button, by removing the classes for each card, 
+resetting the star count, reshuffling the array of cards, and reapplying a new deck.*/
 function main() {
     shuffle(cardList);
     setBoard();
