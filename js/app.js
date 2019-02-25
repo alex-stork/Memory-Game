@@ -18,9 +18,15 @@ let firstCardElement;
 let secondCardElement;
 let starList = document.getElementsByClassName("fa-star");
 
+/*Sets the initial set of stars*/
+document.getElementById("stars").innerHTML = "<li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li\><li><i class=\"fa fa-star\"></i></li>"; 
+
 /*newGame holds the information for the Reset Button. When the Reset Button is clicked, the newBoard function will initiate (function below)*/
 const newGame = document.querySelector("#restart");
 newGame.addEventListener("click", newBoard);
+
+const playAgain = document.querySelector("#playAgain");
+playAgain.addEventListener("click", newBoard);
 
 //Created listener events for each individual card
 oneCard[0].onclick = function() {flipCard(0)};
@@ -120,6 +126,9 @@ function newBoard() {
     document.getElementById("card14").removeAttribute("class");
     document.getElementById("card15").removeAttribute("class");
     
+    //If pop-up is displayed from previous game, it will disappear to allow New Game
+    document.querySelector(".pop-up").style.display = "none";
+
     main();
 }
 
@@ -165,20 +174,19 @@ function flipCard(number) {
 
 /*Checks every time two cards are flipped over to see whether or not the player has won, or if the player has run out of lives. If livesRemaining is not equal to 0, it will then check if the variable tilesMatched is 16 (all cards are matched and flipped over). If all cards are flipped over, the player wins. If the player runs out of lives, the player loses.*/
 function winValidation() {
-    if(livesRemaining != 0) {
+    if(livesRemaining > 0) {
         if(tilesMatched === 16) {
             setTimeout(function () {
-                alert("YOU WIN!!! YOU WON IN " + totalMoves + " moves!");
+                document.getElementById("endGame").style.display = "block";
+                document.getElementById("verdict").innerHTML = "<h1>YOU WIN!!!</h1><h1>You matched all the tiles and made " + totalMoves + " moves. Your star rating was " + livesRemaining + "! Great job!!</h1>";
             }, 500)
         }
-            else {
-            console.log("You have matched " + tilesMatched + " tiles");
-        }
     } else { setTimeout(function () {
-        alert("Game Over!");
         oneCard.forEach(function (element, index) {
             oneCard[index].style.pointerEvents = "none";
         })
+        document.getElementById("endGame").style.display = "block";
+        document.getElementById("verdict").innerHTML = "<h1>GAME OVER</h1><h1>You matched " + tilesMatched + " tiles and made " + totalMoves + " moves. Please try again!</h1>";
         }, 750)
     }
 }

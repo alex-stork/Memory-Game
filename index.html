@@ -16,13 +16,7 @@
         </header>
 
         <section class="score-panel">
-        	<ul id="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-        	</ul>
+        	<ul id="stars"></ul> <!--Stars determined with JavaScript-->
 
         	<span id="moves"></span> Moves
 
@@ -81,6 +75,13 @@
                 <i id="card15"></i>
             </li>
         </ul>
+    </div>
+
+    <div class="pop-up" id="endGame">
+        <div class="pop-up-content">
+            <p id="verdict">WHAT</p>
+        <button id="playAgain" class="button">Play Again?</button>
+        </div>
     </div>
 
     <script src="js/app.js"></script>
