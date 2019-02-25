@@ -1,20 +1,17 @@
 # Memory Game Project
 
-## Table of Contents
+## About
+This repo is for the Udacity Front End Web Development course I am taking to improve my programming skills.
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+Any constructive criticism is welcome!
 
 ## Instructions
+The objective of this game is to match all 16 tiles as quickly and as accurately as possible. 
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+You are given 10 lives total (in the form of stars), and you lose a life for each unsuccessful match. 
 
-To get started, open `js/app.js` and start building out the app's functionality
+When you flip 2 cards, the game will check if they matched. If they don't, you will have a brief moment to look at the 2 cards before tehy are flipped back over and you must try again. If they do match, they will remain flipped over and you must match the remaining set of unflipped cards.
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
+Whether you win, lose, or want to restart, you'll have the opportunity to do so mid-game with the reset button, or at the end of the game.
 
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+You can play the game online at https://alex-stork.github.io/Memory-Game/, or you can download the entire ZIP file and open in your local browser.
