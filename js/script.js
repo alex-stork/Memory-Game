@@ -237,9 +237,9 @@ function flipCard(number) {
             secondCardElement.style.pointerEvents = "none";
             tilesMatched += 2;
         } else {
-            //Need to actually create an animation here
-            //Animation to show not matched, then flip back over
-            livesRemaining -= 1; //(5)
+            if (livesRemaining > 0) {
+                livesRemaining -= 1; //(5)
+            }
             firstCardElement.classList.add("notmatch");
             secondCardElement.classList.add("notmatch");
             firstCardElement.style.pointerEvents = "";
@@ -248,7 +248,9 @@ function flipCard(number) {
             setTimeout(function () {
                 firstCardElement.classList.remove("notmatch", "open", "show");
                 secondCardElement.classList.remove("notmatch", "open", "show");
-                starList[livesRemaining].classList.remove("fa", "fa-star");
+                if (livesRemaining > 0) {
+                    starList[livesRemaining].classList.remove("fa", "fa-star");
+                }
             }, 500)
         }
 
@@ -262,23 +264,12 @@ function flipCard(number) {
 If livesRemaining is not equal to 0, it will then check if the variable tilesMatched is 16 (all cards are matched and flipped over). 
 If all cards are flipped over, the player wins. If the player runs out of lives, the player loses.*/
 function winValidation() {
-    if (livesRemaining > 0) {
-        if (tilesMatched === 16) {
-            window.clearInterval(timer);
-            setTimeout(function () {
-                document.getElementById("endGame").style.display = "block";
-                document.getElementById("verdict").innerHTML = "<h1>YOU WIN!!!</h1><h1>You matched all the tiles and made " + totalMoves + " moves. Your star rating was " + livesRemaining + " and you beat the game in " + minutes + " minutes and " + seconds + " seconds!! Great job!!</h1>";
-            }, 500)
-        }
-    } else {
+    if (tilesMatched === 16) {
         window.clearInterval(timer);
         setTimeout(function () {
-            oneCard.forEach(function (element, index) {
-                oneCard[index].style.pointerEvents = "none";
-            })
             document.getElementById("endGame").style.display = "block";
-            document.getElementById("verdict").innerHTML = "<h1>GAME OVER</h1><h1>You matched " + tilesMatched + " tiles and made " + totalMoves + " moves. Please try again!</h1>";
-        }, 750)
+            document.getElementById("verdict").innerHTML = "<h1>YOU WIN!!!</h1><h1>You matched all the tiles and made " + totalMoves + " moves. Your star rating was " + livesRemaining + " and you beat the game in " + minutes + " minutes and " + seconds + " seconds!! Great job!!</h1>";
+        }, 500)
     }
 }
 
